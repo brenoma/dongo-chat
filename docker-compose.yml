@@ -17,15 +17,15 @@ services:
     volumes:
       - .docker/dbdata:/var/lib/postgresql/data
     environment:
-      - POSTGRES_PASSWORD=root
-      - POSTGRES_DB=dongo_api
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
 
   pgadmin:
     image: dpage/pgadmin4
     tty: true
     environment:
-      - PGADMIN_DEFAULT_EMAIL=admin@user.com
-      - PGADMIN_DEFAULT_PASSWORD=123456
+      - PGADMIN_DEFAULT_EMAIL=${DB_USER_MAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${DB_USER_PASSWORD}
     ports:
       - '9000:80'
     depends_on:
