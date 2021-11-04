@@ -12,7 +12,7 @@ export class UserController {
   ) { }
 
   @Post()
-  store(@Body() body) {
+  createUser(@Body() body) {
     const user = this.userRepo.create(body);
     return this.userRepo.save(user);
   }

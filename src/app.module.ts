@@ -5,6 +5,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserController } from './controllers/user/user.controller';
 import { User } from './models/user.model';
+import { AuthModule } from './controllers/auth/auth.module';
+import { AuthController } from './controllers/auth/auth.controller';
+import { AuthService } from './controllers/auth/shared/auth.service';
+import { UserService } from './controllers/user/shared/user.service';
 
 @Module({
   imports: [
@@ -19,8 +23,9 @@ import { User } from './models/user.model';
       entities: [User],
     }),
     TypeOrmModule.forFeature([User]),
+    AuthModule,
   ],
-  controllers: [AppController, UserController],
-  providers: [AppService],
+  controllers: [AppController, UserController, AuthController],
+  providers: [AppService, AuthService, UserService],
 })
 export class AppModule { }
