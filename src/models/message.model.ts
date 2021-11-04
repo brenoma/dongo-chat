@@ -3,16 +3,16 @@ import {
   CreateDateColumn,
   Entity,
   ObjectID,
-  ObjectIdColumn,
   OneToMany,
+  PrimaryColumn,
 } from 'typeorm';
 import { Room } from './room.model';
 import { User } from './user.model';
 
 @Entity({ name: 'messages' })
 export class Message {
-  @ObjectIdColumn({ primary: true })
-  id: ObjectID;
+  @PrimaryColumn({ primary: true })
+  id: number;
 
   @Column({ type: "string", length: 140, nullable: false })
   content: string;
