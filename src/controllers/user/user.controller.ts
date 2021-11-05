@@ -1,29 +1,24 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/models/user.model';
-import { Repository } from 'typeorm';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Res } from '@nestjs/common';
+import { UserService } from './shared/user.service';
+import { Response } from 'express';
 
 // CRUD
 @Controller('users')
 export class UserController {
-  constructor(
-    @InjectRepository(User)
-    private userRepo: Repository<User>,
-  ) { }
+  constructor(private userService: UserService) { }
 
   @Get()
   listUsers() {
-    return this.userRepo.find();
+    return this.userService.list();
   }
 
-  @Get(':id')
-  showUser(@Param('id') id: string) {
-    return this.userRepo.findOne(id)
+  @Get('find')
+  findUser(@Body() body) {
+    return this.userService.findUser(body);
   }
 
-  @Post()
+  @Post('create')
   createUser(@Body() body) {
-    const user = this.userRepo.create(body);
-    return this.userRepo.save(user);
+    return this.userService.createUser(body);
   }
 }

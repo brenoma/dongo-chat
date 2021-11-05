@@ -4,17 +4,17 @@ import {
   Entity,
   ObjectID,
   OneToMany,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Room } from './room.model';
 import { User } from './user.model';
 
 @Entity({ name: 'messages' })
 export class Message {
-  @PrimaryColumn({ primary: true })
+  @PrimaryGeneratedColumn({})
   id: number;
 
-  @Column({ type: "string", length: 140, nullable: false })
+  @Column({})
   content: string;
 
   @OneToMany(type => User, userId => userId.id)

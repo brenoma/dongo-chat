@@ -3,22 +3,21 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
-  ObjectID,
-  ObjectIdColumn,
   OneToMany,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Message } from './message.model';
 import { User } from './user.model';
 
 @Entity({ name: 'rooms' })
 export class Room {
-  @ObjectIdColumn({ primary: true })
-  id: ObjectID;
+  @PrimaryGeneratedColumn({  })
+  id: number;
 
-  @Column({ type: "string", length: 25, nullable: false })
+  @Column({ })
   name: string;
 
-  @Column({ type: "string", length: 150 })
+  @Column({ })
   description: string;
 
   @OneToMany(type => User, user => user.id)

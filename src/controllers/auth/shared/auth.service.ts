@@ -2,6 +2,7 @@ import { Body, Injectable, Post } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/models/user.model';
 import { Repository } from 'typeorm';
+import { compareSync } from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -27,6 +28,7 @@ export class AuthService {
     const token = await 'IMPLEMENTACAO JWT'
 
     return {
+      user: `${user.id, user.email, user.name, user.role}`,
       message: `Bem vindo, ${user.name}`,
       token
     }
