@@ -20,8 +20,8 @@ export class Message {
   @OneToMany(type => User, userId => userId.id)
   userId: ObjectID;
 
-  @OneToMany(type => Room, roomId => roomId.id)
-  roomId: number;
+  // @OneToMany(type => Room, roomId => roomId.id)
+  // roomId: number;
 
   @CreateDateColumn()
   created_at: Date;

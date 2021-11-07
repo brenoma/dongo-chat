@@ -3,12 +3,19 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+
 import { UserController } from './controllers/user/user.controller';
 import { User } from './models/user.model';
+import { UserService } from './controllers/user/shared/user.service';
+import { UserModule } from './controllers/user/user.module';
+
 import { AuthModule } from './controllers/auth/auth.module';
 import { AuthController } from './controllers/auth/auth.controller';
-import { AuthService } from './controllers/auth/shared/auth.service';
-import { UserService } from './controllers/user/shared/user.service';
+
+import { MessageController } from './controllers/message/message.controller';
+import { MessageModule } from './controllers/message/message.module';
+import { MessageService } from './controllers/message/shared/message.service';
+import { Message } from './models/message.model';
 
 @Module({
   imports: [
@@ -20,12 +27,13 @@ import { UserService } from './controllers/user/shared/user.service';
       username: process.env.TYPEORM_USERNAME,
       password: process.env.TYPEORM_PASSWORD,
       database: process.env.TYPEORM_DATABASE,
-      entities: [User],
+      entities: [User, Message],
     }),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Message]),
     AuthModule,
+    MessageModule,
   ],
-  controllers: [AppController, UserController, AuthController],
-  providers: [AppService, AuthService, UserService],
+  controllers: [AppController, UserController, AuthController, MessageController],
+  providers: [AppService, UserService, MessageService],
 })
 export class AppModule { }

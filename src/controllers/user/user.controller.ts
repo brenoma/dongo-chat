@@ -1,11 +1,19 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  UseGuards,
+  Request
+} from '@nestjs/common';
 import { UserService } from './shared/user.service';
-import { Response } from 'express';
+import { AuthGuard } from '@nestjs/passport';
+import { AuthService } from '../auth/shared/auth.service';
 
 // CRUD
 @Controller('users')
 export class UserController {
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private authService: AuthService) {}
 
   @Get()
   listUsers() {
@@ -20,5 +28,12 @@ export class UserController {
   @Post('create')
   createUser(@Body() body) {
     return this.userService.createUser(body);
+  }
+
+  @UseGuards(AuthGuard('local'))
+  @Post('login')
+  async login(@Request() req) {
+    console.log(req.body.username)
+    return this.authService.validate(req.body.username, req.body.password)
   }
 }

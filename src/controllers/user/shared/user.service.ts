@@ -2,7 +2,7 @@ import { Body, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/models/user.model';
 import { Repository } from 'typeorm';
-import { hashSync } from 'bcrypt'
+import { genSalt, hashSync } from 'bcrypt'
 
 @Injectable()
 export class UserService { 
@@ -21,6 +21,12 @@ export class UserService {
     const user = await this.userRepo.create(body)
 
     return await this.userRepo.save(user)
+    .then((result) => {
+      return {
+        status: true,
+        mensagem: "Usuário Cadastrado com sucesso"
+      }
+    })
   }
 
   async findUser(@Body() body) {

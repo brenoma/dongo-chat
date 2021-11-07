@@ -6,8 +6,8 @@ export class AuthController {
   constructor(private authService: AuthService) { }
 
   @Post('login')
-  login(@Body() body) {
-    return this.authService.login(body)
+  validate(username: string, password: string) {
+    return this.authService.validate(username, password)
   }
 }
 
