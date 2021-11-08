@@ -22,7 +22,6 @@ export class AuthService {
     console.log(user)
 
     if(user && compareSync(password, user.password)) {
-      const token = await 'IMPLEMENTACAO JWT';
       return {
         email: user.email,
         role: user.role,

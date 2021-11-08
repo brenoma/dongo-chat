@@ -33,7 +33,6 @@ export class UserController {
   @UseGuards(AuthGuard('local'))
   @Post('login')
   async login(@Request() req) {
-    console.log(req.body.username)
     return this.authService.validate(req.body.username, req.body.password)
   }
 }
