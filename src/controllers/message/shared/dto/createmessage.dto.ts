@@ -1,4 +1,4 @@
-class CreateMessageDto {
+export class CreateMessageDto {
   content: string
   userId: number
 }
