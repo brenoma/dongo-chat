@@ -2,7 +2,6 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  ObjectID,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -18,7 +17,7 @@ export class Message {
   content: string;
 
   @OneToMany(type => User, userId => userId.id)
-  userId: ObjectID;
+  userId: number;
 
   // @OneToMany(type => Room, roomId => roomId.id)
   // roomId: number;

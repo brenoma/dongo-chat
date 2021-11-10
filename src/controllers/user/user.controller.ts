@@ -6,7 +6,7 @@ import {
   UseGuards,
   Request
 } from '@nestjs/common';
-import { UserService } from './shared/user.service';
+import { UserService } from './user.service';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from '../auth/shared/auth.service';
 
