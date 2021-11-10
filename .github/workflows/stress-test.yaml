@@ -33,12 +33,11 @@ jobs:
           npm install
           npm run build
           npm run env
+          npm run typeorm migration:run
         env:
           DATABASE_URL: postgres://postgres:root@localhost:${{ job.services.postgres.ports[5432] }}/dongo_api
       - name: Run the server
-        run: |
-          npm run start:dev
-          npm run typeorm migration:run
+        run: npm run start:dev &
         env:
           PORT: 3000          
           DATABASE_URL: postgres://postgres:root@localhost:${{ job.services.postgres.ports[5432] }}/dongo_api
