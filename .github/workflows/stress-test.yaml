@@ -36,14 +36,14 @@ jobs:
         env:
           DATABASE_URL: postgres://postgres:root@localhost:${{ job.services.postgres.ports[5432] }}/dongo_api
       - name: Run the server
-        run: | 
+        run: |
           npm run start:dev
           npm run typeorm migration:run
         env:
           PORT: 3000
           NODE_ENV: production
           APP_SECRET: RUtBZUJZUnIzekhONDllNHNwaVRpVE5jMWFwek9ETFV3WXFERUNTb3o0VngzdEJMWkxzL1ExVnU5
-          DATABASE_URL: postgres://tighten:root@localhost:${{ job.services.postgres.ports[5432] }}/dongo_api
+          DATABASE_URL: postgres://postgres:root@localhost:${{ job.services.postgres.ports[5432] }}/dongo_api
           ALLOWED_ORIGINS: '*'
       - name: Run k6 local test
         run: ./k6 run stress-test/main.js
