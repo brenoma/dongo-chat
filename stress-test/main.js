@@ -21,7 +21,8 @@ export const options = {
 //     username: 'breno1@breno.com',
 //     password: '123',
 //   });
-//   const [, token] = res.body.token
+//   console.log(JSON.stringify(res.status))
+//   const [, token] = res.data.token
 
 //   return { token };
 // }
