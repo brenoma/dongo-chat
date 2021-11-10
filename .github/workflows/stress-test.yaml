@@ -1,0 +1,44 @@
+name: Stress Testing with K6
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  run-server:
+    name: Start server and stress it with K6
+    runs-on: ubuntu-latest
+    services:
+      postgres: postgres:latest
+      env:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: root
+        POSTGRES_DB: dongo
+      ports:
+        - 5432:5432
+      options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+  steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2-beta
+      with:
+        node-version: 14-alpine
+    - name: Install K6
+      run: |
+        curl https://github.com/loadimpact/k6/releases/download/v0.28.0/k6-v0.28.0-linux64.tar.gz -L | tar xvz --strip-components 1
+    - uses: bahmutov/npm-install@v1
+    - name: Setup Project Files
+      run: |
+        npm run build
+        npm run typeorm migration:run
+      env:
+        DATABASE_URL: postgres://postgres:root@localhost:${{ job.services.postgres.ports[5432] }}/dongo
+    - name: Run Project
+      run: npm start &
+      env:
+        PORT: 3000
+        DATABASE_URL: postgres://postgres:root@localhost:${{ job.services.postgres.ports[5432] }}/dongo
+        ALLOWED_ORIGINS: '*'
+    - name: Run k6 local test
+      run: ./k6 run stress-test/main.js
