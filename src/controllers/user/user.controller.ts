@@ -20,7 +20,7 @@ export class UserController {
     return this.userService.list();
   }
 
-  @Get('find')
+  @Post('find')
   findUser(@Body() body) {
     return this.userService.findUser(body);
   }

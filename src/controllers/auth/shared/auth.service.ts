@@ -19,10 +19,9 @@ export class AuthService {
       },
     });
 
-    console.log(user)
-
     if(user && compareSync(password, user.password)) {
       return {
+        user: user.name,
         email: user.email,
         role: user.role,
         message: `Bem vindo, ${user.name}`,
