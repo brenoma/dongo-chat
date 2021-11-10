@@ -18,7 +18,6 @@ jobs:
           POSTGRES_DB: embassy
         ports:
         - 5432:5432
-        # needed because the postgres container does not provide a healthcheck
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
       - uses: actions/checkout@v2
@@ -31,14 +30,14 @@ jobs:
       - uses: bahmutov/npm-install@v1
       - name: Setup the project
         run: |
-          npm run build
+          npm install
+          npm run env
           npm run typeorm migration:run
-          npm run fixtures
-          npm prune --production
+          npm run build
         env:
           DATABASE_URL: postgres://tighten:rename@localhost:${{ job.services.postgres.ports[5432] }}/embassy
       - name: Run the server
-        run: npm start &
+        run: npm run start:dev &
         env:
           PORT: 3000
           NODE_ENV: production
