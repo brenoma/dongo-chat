@@ -13,9 +13,9 @@ jobs:
       postgres:
         image: postgres:12
         env:
-          POSTGRES_USER: tighten
-          POSTGRES_PASSWORD: rename
-          POSTGRES_DB: embassy
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: root
+          POSTGRES_DB: dongo_api
         ports:
         - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
@@ -35,14 +35,14 @@ jobs:
           npm run typeorm migration:run
           npm run build
         env:
-          DATABASE_URL: postgres://tighten:rename@localhost:${{ job.services.postgres.ports[5432] }}/embassy
+          DATABASE_URL: postgres://postgres:root@localhost:${{ job.services.postgres.ports[5432] }}/dongo_api
       - name: Run the server
         run: npm run start:dev &
         env:
           PORT: 3000
           NODE_ENV: production
           APP_SECRET: RUtBZUJZUnIzekhONDllNHNwaVRpVE5jMWFwek9ETFV3WXFERUNTb3o0VngzdEJMWkxzL1ExVnU5
-          DATABASE_URL: postgres://tighten:rename@localhost:${{ job.services.postgres.ports[5432] }}/embassy
+          DATABASE_URL: postgres://tighten:root@localhost:${{ job.services.postgres.ports[5432] }}/dongo_api
           ALLOWED_ORIGINS: '*'
       - name: Run k6 local test
         run: ./k6 run stress-test/main.js
