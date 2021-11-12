@@ -17,8 +17,8 @@ import { MessageModule } from './controllers/message/message.module';
 import { MessageService } from './controllers/message/message.service';
 import { Message } from './models/message.model';
 
-import { WebsocketService } from './websocket/websocket.service';
 import { typeOrmConfig } from 'configs/typeorm.config';
+import { AppGateway } from './app.gateway';
 
 @Module({
   imports: [
@@ -29,6 +29,6 @@ import { typeOrmConfig } from 'configs/typeorm.config';
     MessageModule,
   ],
   controllers: [AppController, UserController, AuthController, MessageController],
-  providers: [AppService, UserService, MessageService, WebsocketService],
+  providers: [AppService, UserService, MessageService, AppGateway],
 })
 export class AppModule { }
