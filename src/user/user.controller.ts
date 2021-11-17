@@ -8,7 +8,8 @@ import {
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { AuthGuard } from '@nestjs/passport';
-import { AuthService } from '../auth/shared/auth.service';
+import { AuthService } from '../auth/auth.service';
+import { FindUserDto } from './dto/find-user.dto';
 
 // CRUD
 @Controller('users')
@@ -21,12 +22,12 @@ export class UserController {
   }
 
   @Post('find')
-  findUser(@Body() body) {
-    return this.userService.findUser(body);
+  findUser(@Request() req) {
+    return this.userService.findUser(req.body.email);
   }
 
   @Post('create')
-  createUser(@Body() body) {
+  createUser(@Request() body) {
     return this.userService.createUser(body);
   }
 

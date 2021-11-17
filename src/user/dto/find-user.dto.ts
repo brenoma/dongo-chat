@@ -1,3 +1,3 @@
 export class FindUserDto {
-  email: string
+  readonly email: string
 }
