@@ -1,11 +1,13 @@
 import { Logger } from '@nestjs/common';
-import { MessageBody, OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, SubscribeMessage, WebSocketGateway, WsResponse } from '@nestjs/websockets';
+import { MessageBody, OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, SubscribeMessage, WebSocketGateway, WebSocketServer, WsResponse } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
+import { SocketMessageDto } from './shared/enum/dto/socket-message.dto';
 
 @WebSocketGateway({ cors: true })
 export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
 
   private logger: Logger = new Logger('AppGateway')
+  @WebSocketServer() wsServer: Server;
 
   afterInit(server: Server) {
     this.logger.log('GATEWAY INITIALIZED')
@@ -13,15 +15,6 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
 
   handleConnection(client: Socket) {
     this.logger.log(`Client Connected: ${client.id}`)
-    const users = [{ userID: 1, username: client.handshake.auth.username }];
-    for (let i = 0; i < 3; i++) {
-      users.push({
-        userID: 1,
-        username: 'teste'
-      })
-    }
-    client.emit('users', users)
-
     client.broadcast.emit('user connected', {
       userID: client.id,
       username: client.handshake.auth.username
@@ -34,12 +27,15 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
   }
 
   @SubscribeMessage('msgToServer')
-  handleMessage(client: Socket, text: string): WsResponse<string> {
-    return { event: 'msgToClient', data: text }
+  handleMessage(client: Socket, payLoad: SocketMessageDto) {
+    payLoad = new SocketMessageDto(payLoad)
+    this.logger.log(payLoad.user)
+    // client.broadcast.emit('msgToServer', payLoad)
+    this.wsServer.emit('msgToServer', payLoad)
   }
 
-  @SubscribeMessage('send-message')
-  sendMessage(@MessageBody() body: any) {
-    console.log(body)
-  }
+  // @SubscribeMessage('msgToClient')
+  // sendMessage(@MessageBody() body: any) {
+  //   console.log(body)
+  // }
 }

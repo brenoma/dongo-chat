@@ -17,7 +17,9 @@ export class AuthService {
       where: {
         email: username,
       },
-    });
+    })
+
+    if(!user) throw new HttpException('Email e/ou senha incorretos', HttpStatus.UNAUTHORIZED)
 
     if (user && compareSync(password, user.password)) {
       return {
@@ -30,11 +32,11 @@ export class AuthService {
     } throw new HttpException('Email e/ou senha incorretos', HttpStatus.UNAUTHORIZED);
   }
 
-  async login(user: any) {
-    const payLoad = { username: user.username, sub: user.userId }
-    return {
-      acess_token: this.jwtService.sign(payLoad)
-    }
-  }
+  // async login(user: User) {
+  //   const payLoad = { username: user.name, sub: user.id }
+  //   return {
+  //     acess_token: this.jwtService.sign(payLoad)
+  //   }
+  // }
 
 }

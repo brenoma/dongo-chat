@@ -4,8 +4,8 @@ import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/models/user.model';
 import { AuthController } from './auth.controller';
-import { jwtConstants } from './constants';
-import { AuthService } from './shared/auth.service';
+import { jwtConstants } from './shared/constants';
+import { AuthService } from './auth.service';
 import { LocalStrategy } from './shared/local.strategy';
 
 @Module({
