@@ -19,14 +19,14 @@ export class AuthService {
       },
     })
 
-    if(!user) throw new HttpException('Email e/ou senha incorretos', HttpStatus.UNAUTHORIZED)
+    if (!user) throw new HttpException('Email e/ou senha incorretos', HttpStatus.UNAUTHORIZED)
 
     if (user && compareSync(password, user.password)) {
       return {
+        id: user.id,
         user: user.name,
         email: user.email,
         role: user.role,
-        message: `Bem vindo, ${user.name}`,
         token: this.jwtService.sign({ username: user.email, sub: user.id, })
       };
     } throw new HttpException('Email e/ou senha incorretos', HttpStatus.UNAUTHORIZED);

@@ -13,16 +13,14 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private userRepo: Repository<User>,
-  ) {}
+  ) { }
 
   list() {
     return this.userRepo.find();
   }
 
   async createUser(@Body() createUserDto) {
-    console.log(createUserDto.body.name)
-    createUserDto.password = hashSync(createUserDto.body.password, 8);
-
+    createUserDto.body.password = hashSync(createUserDto.body.password, 8);
     const user = this.userRepo.create(createUserDto.body);
 
     return await this.userRepo.save(user).catch((err) => {
@@ -35,7 +33,7 @@ export class UserService {
       where: { email: email },
     });
 
-    if(!user) {
+    if (!user) {
       throw new HttpException('Usuário não encontrado', HttpStatus.NOT_FOUND);
     }
     return user;

@@ -27,11 +27,11 @@ export class CreateMessagesTable1636169351052 implements MigrationInterface {
             type: 'int',
             isPrimary: true,
           },
-        //   {
-        //     name: 'roomId',
-        //     type: 'int',
-        //     isPrimary: true,
-        //   },
+          //   {
+          //     name: 'roomId',
+          //     type: 'int',
+          //     isPrimary: true,
+          //   },
           {
             name: 'created_at',
             type: 'timestamp',
@@ -42,19 +42,19 @@ export class CreateMessagesTable1636169351052 implements MigrationInterface {
     );
 
     await queryRunner.createForeignKeys(
-        'messages',
-    [
+      'messages',
+      [
         new TableForeignKey({
-            columnNames: ['userId'],
-            referencedTableName: 'users',
-            referencedColumnNames: ['id']
+          columnNames: ['userId'],
+          referencedTableName: 'users',
+          referencedColumnNames: ['id']
         }),
         // new TableForeignKey({
         //     columnNames: ['roomId'],
         //     referencedTableName: 'rooms',
         //     referencedColumnNames: ['id']
         // })
-    ]);
+      ]);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {

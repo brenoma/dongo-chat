@@ -1,9 +1,9 @@
 export class SocketMessageDto {
-  ide: number
+  id: number
   content: string
   user: string
 
   constructor(message: SocketMessageDto) {
-    Object.assign(this,message)    
+    Object.assign(this, message)
   }
 }
