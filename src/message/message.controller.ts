@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { CreateMessageDto } from './dto/createmessage.dto';
 import { MessageService } from './message.service';
 
 @Controller('messages')
@@ -15,10 +16,10 @@ export class MessageController {
     return this.messageService.getMessageById(Number(id))
   }
 
-  // @Post()
-  // async createMessage(@Body() message: CreateMessageDto) {
-  //   return this.messageService.createMessage(message)
-  // }
+  @Post('create')
+  async createMessage(@Body() data: CreateMessageDto) {
+    return this.messageService.createMessage(data)
+  }
 
   // @Put(':id')
   // async editMessage(@Param('id') id: string, @Body() message: UpdateMessageDto) {

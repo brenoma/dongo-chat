@@ -2,8 +2,10 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Message } from './message.model';
 
 @Entity({ name: 'users' })
 export class User {
@@ -13,11 +15,14 @@ export class User {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()
   password: string;
+
+  @OneToMany(() => Message, (message: Message) => message.author)
+  messages: Message[];
 
   @Column()
   role: string;

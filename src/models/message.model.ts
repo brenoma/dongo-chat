@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -16,8 +17,8 @@ export class Message {
   @Column({})
   content: string;
 
-  @OneToMany(type => User, userId => userId.id)
-  userId: number;
+  @ManyToOne(() => User, (author: User) => author.messages)
+  author: User;
 
   // @OneToMany(type => Room, roomId => roomId.id)
   // roomId: number;

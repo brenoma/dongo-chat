@@ -8,20 +8,20 @@ import {
 @Entity({ name: 'users' })
 export class UserEntity {
   @PrimaryGeneratedColumn()
-  id: number;
+  public id: number;
 
   @Column()
-  name: string;
+  public name: string;
+
+  @Column({ unique: true })
+  public email: string;
 
   @Column()
-  email: string;
+  public password: string;
 
   @Column()
-  password: string;
-
-  @Column()
-  role: string;
+  public role: string;
 
   @CreateDateColumn()
-  created_at: Date;
+  public created_at: Date;
 }

@@ -1,4 +1,5 @@
 import {
+  Connection,
   MigrationInterface,
   QueryRunner,
   Table,
@@ -23,9 +24,8 @@ export class CreateMessagesTable1636169351052 implements MigrationInterface {
             type: 'varchar',
           },
           {
-            name: 'userId',
+            name: 'authorId',
             type: 'int',
-            isPrimary: true,
           },
           //   {
           //     name: 'roomId',
@@ -45,7 +45,7 @@ export class CreateMessagesTable1636169351052 implements MigrationInterface {
       'messages',
       [
         new TableForeignKey({
-          columnNames: ['userId'],
+          columnNames: ['authorId'],
           referencedTableName: 'users',
           referencedColumnNames: ['id']
         }),

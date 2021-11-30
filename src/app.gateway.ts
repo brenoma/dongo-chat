@@ -29,7 +29,8 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
   @SubscribeMessage('msgToServer')
   handleMessage(client: Socket, payLoad: SocketMessageDto) {
     payLoad = new SocketMessageDto(payLoad)
-    this.logger.log(payLoad.user)
+    console.log(payLoad)
+    this.logger.log(payLoad)
     // client.broadcast.emit('msgToServer', payLoad)
     this.wsServer.emit('msgToServer', payLoad)
   }
